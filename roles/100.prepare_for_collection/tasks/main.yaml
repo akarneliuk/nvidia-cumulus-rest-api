@@ -1,0 +1,7 @@
+---
+- name: 10. Create output directory
+  delegate_to: localhost
+  ansible.builtin.file:
+    path: "{{ output_dir }}"
+    state: directory
+...

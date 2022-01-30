@@ -1,0 +1,11 @@
+---
+# Pre-defined data // Connectivity
+ansible_user: cumulus
+ansible_password: CumulusLinux!
+
+# Custom data // Connectivity
+rest_api_port: 8765
+
+# Custom data // Paths
+output_dir: output
+...

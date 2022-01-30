@@ -1,0 +1,10 @@
+---
+- name: DATA COLLECTION FROM NVIDIA CUMULUS
+  hosts: dc-fabric
+  gather_facts: no
+
+  roles:
+    - 100.prepare_for_collection
+    - 200.collect_data
+    - 300.save_data
+...

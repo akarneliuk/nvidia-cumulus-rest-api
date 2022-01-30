@@ -1,0 +1,7 @@
+---
+- name: 10. Save collected data
+  delegate_to: localhost
+  ansible.builtin.copy:
+    content: "{{ collected_output.json | to_nice_yaml }}"
+    dest: "{{ output_dir }}/{{ inventory_hostname }}.yaml"
+...

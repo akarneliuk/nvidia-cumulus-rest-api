@@ -1,0 +1,34 @@
+---
+- name: 10. Set temp vars
+  ansible.builtin.set_fact:
+    creds_plain: "{{ ansible_user }}:{{ ansible_password }}"
+    url_path: https://{{ ansible_host }}:{{ rest_api_port }}/nvue_v1
+    url_config_query: "rev=applied"
+    url_operational_query: "rev=operational"
+
+- name: 20. Collect Configuration via REST API
+  ansible.builtin.uri:
+    url: "{{ url_path }}/?{{ url_config_query }}"
+    return_content: yes
+    method: GET
+    validate_certs: no
+    headers:
+      Content-Type: application/json
+      Authorization: Basic {{ creds_plain | string | b64encode }}
+  register: collected_output
+
+- name: 30. Collect Operational Data via REST API
+  ansible.builtin.uri:
+    url: "{{ url_path }}/interface/swp2?{{ url_operational_query }}"
+    return_content: yes
+    method: GET
+    validate_certs: no
+    headers:
+      Content-Type: application/json
+      Authorization: Basic {{ creds_plain | string | b64encode }}
+  register: operational_data
+
+- name: 40. Validate Operational Data
+  ansible.builtin.debug:
+    var: operational_data.json
+...
